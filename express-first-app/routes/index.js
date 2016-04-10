@@ -14,4 +14,13 @@ router.get('/users/detail',function(req, res, next){
     res.send('response with user Detail');
 });
 
+router.get('/teste/:id',function (req, res, next){
+    res.render('teste',{output:req.params.id});
+});
+
+router.post('/teste/submit',function (req, res, next) {
+    var id = req.body.id;
+    res.redirect("/teste/"+id);
+});
+
 module.exports = router;
