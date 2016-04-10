@@ -1,4 +1,21 @@
+{{# if session}}
+  <section>
+    <h2>Successful validation</h2>
+  </section>
+  
+{{/if}}
+{{else}}
+    {{#if errors}}
+      <section class="errors">
+        {{# each errors}}
+          <li>{{this.msg}}</li>
+        {{/each}}
+      </section>
+    {{/if}}
+
 <form action="/test/submit" method="POST">
   <input type="text" id="teste">
   <input type="submit" value="SUbmit">
 </form>
+
+{{/else}}

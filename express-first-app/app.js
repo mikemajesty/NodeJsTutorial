@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require("express-handlebars");
 var routes = require('./routes/index'); 
-
+var expressValidator = require("express-validator");
+var expressSession = require("express-session");
 var app = express();
 
 app.engine('hbs',hbs({
@@ -23,8 +24,10 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressSession({secret:'max',saveUnitialized:false, resave:false}));
 
 app.use('/', routes);
 
