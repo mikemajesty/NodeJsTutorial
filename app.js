@@ -2,7 +2,6 @@ var url = require("url");
 var fs = require("fs");
 
 var renderHtml = (path, response) => {
-
   fs.readFile(path, (err, data) => {
     if (err) {
       response.writeHead(404);
@@ -14,7 +13,7 @@ var renderHtml = (path, response) => {
     response.end();
 
   });
-}
+};
 
 module.exports = {
   handleRequest: (request, response) => {

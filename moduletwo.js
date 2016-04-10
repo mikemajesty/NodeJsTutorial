@@ -1,7 +1,7 @@
 module.exports = {
 
   myOtherFunction: () =>{
-      console.log("Exported!!")
+      console.log("Exported!!");
   },
   myVariable: "Export variables!!!"
 

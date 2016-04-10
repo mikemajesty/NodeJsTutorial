@@ -1,9 +1,5 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "module": "commonjs"
-    },
-    "exclude": [
-        "bower_components"
-    ]
+        "target": "ES6"
+    }
 }
