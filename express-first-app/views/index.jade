@@ -2,4 +2,20 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Olá #{title}
+  ul
+   li My Test
+   li.
+      gsgsg iidididid ididiid
+      iggg iii ii
+   input(type="text").class-name#anyid
+   if condition
+    p It's true
+   - var conditiontwo = true;
+   if conditiontwo
+    p Other condition is true
+    
+   - var anyArray = [1,2,3,4]   
+   each value in anyArray
+    p= value
+    
