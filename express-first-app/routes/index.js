@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var mongo = require('mongodb');
+var mongo = require('mongodb').MongoClient;
+var object = require('mongodb').ObjectID;
 var assert = require('assert');
 
 var url = 'mongodb://localhost:27017/test';
@@ -67,11 +68,33 @@ router.post('/insert',(req,res,next)=>{
 });
 
 router.post('/delete',(req,res,next)=>{
-    
+    var id = req.body.id;
+    mongo.connect(url, (err,db) =>{
+        assert.equals(null,err);
+        db.collection('user-data').deleteOne({'_id':object(id)},(err,result)=>{
+            assert.equals(null,err);
+                console.log('Item deleted');
+                db.close();
+        });
+    });
 });
 
 router.post('update',(req,res,next)=>{
+    var item = {
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.author
+    };
     
+    var id = req.body.id;
+    mongo.connect(url, (err,db) =>{
+        assert.equals(null,err);
+        db.collection('user-data').updateOne({'_id':object(id)},{$set: item},(err,result)=>{
+            assert.equals(null,err);
+                console.log('Item Update');
+                db.close();
+        });
+    });
 });
 
 router.post('/submit/ola',(req,res,next)=>{
