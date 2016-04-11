@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var mongo = require('mongodb');
+var assert = require('assert');
 
+var url = 'mongodb://localhost:27017/test';
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express',condition: false});
@@ -27,6 +30,48 @@ router.post('/teste/submit',function (req, res, next) {
 router.get('/index/ola',(req,res,next)=>{
     res.render('index',{title:'Form Validation', success: session.success, errors: req.session.erros});
     req.session.errors = null;
+});
+
+router.get('/get-data',(req,res,next)=>{
+    var resultArray = [];
+    mongo.connect(url,(err,db)=>{
+        assert.equals(null,err);
+        var cursor = db.collection('user-data').find();
+        cursor.forEach((doc,err)=>{
+            assert.equals(null,err);
+            resultArray.push(doc);
+        },()=>{
+            db.close();
+            res.render('index',{items: resultArray});
+        });
+    });
+});
+
+router.post('/insert',(req,res,next)=>{
+    var item = {
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.author
+    };
+    
+    mongo.connect(url, (err,db) =>{
+        assert.equals(null,err);
+        db.collection('user-data').insertOne(item,(err,result)=>{
+            assert.equals(null,err);
+                console.log('Item Inserted');
+                db.close();
+        });
+    });
+    
+    res.redirect('/');
+});
+
+router.post('/delete',(req,res,next)=>{
+    
+});
+
+router.post('update',(req,res,next)=>{
+    
 });
 
 router.post('/submit/ola',(req,res,next)=>{
